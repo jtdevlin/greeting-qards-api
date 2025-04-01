@@ -1,6 +1,5 @@
 package com.greetingQards.security;
 
-import com.greetingQards.service.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
