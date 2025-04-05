@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class WalletSetResponse {
-    public WalletSet walletSet;
+    private WalletSet walletSet;
 }

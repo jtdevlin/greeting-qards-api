@@ -5,12 +5,11 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
-import java.security.Key;
 import java.util.Date;
 import java.util.function.Function;
 
@@ -18,18 +17,10 @@ import java.util.function.Function;
 @Component
 public class JwtUtil {
 
-//    private final SecretKey secret;
+    private final String secret;
 
-    public static final String SECRET = "5367566859703373367639792F423F452848284D6251655468576D5A71347437";
-
-    public JwtUtil() {
-        try {
-            KeyGenerator keyGenerator = KeyGenerator.getInstance("HmacSHA256");
-//            this.secret = keyGenerator.generateKey();
-        } catch (Exception e) {
-            log.error("Cannot create secret key", e);
-            throw new IllegalStateException("Cannot authenticate user", e);
-        }
+    public JwtUtil(@Value("${jwt.secret}")String secret) {
+        this.secret = secret;
     }
 
     public String createToken(String username) {
@@ -42,7 +33,7 @@ public class JwtUtil {
                 .compact();
     }
     private SecretKey getSignKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(SECRET);
+        byte[] keyBytes = Decoders.BASE64.decode(secret);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 

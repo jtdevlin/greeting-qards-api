@@ -8,13 +8,18 @@ spring:
     username: jasondevlin
     password:
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
     show-sql: true # Show SQL queries in console
     hibernate:
       ddl-auto: update # Updates schema automatically
 
+jwt:
+  secret: ${CLIENT_SECRET}
+
 wallet:
   api:
-#    url: http://localhost:8080/api/v1/wallets
+    host: https://api.circle.com
+    base-path: /v1/w3s
     key: ${WALLET_API_KEY}
     app-id: ${WALLET_APP_ID}
+    public-key: ${WALLET_PUBLIC_KEY}
+    secret: ${CLIENT_SECRET}

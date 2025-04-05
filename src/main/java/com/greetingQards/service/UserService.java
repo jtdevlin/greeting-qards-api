@@ -6,7 +6,6 @@ import com.greetingQards.repository.UserEntity;
 import com.greetingQards.repository.UserRepository;
 import jakarta.ws.rs.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -34,13 +33,11 @@ public class UserService implements UserDetailsService {
         encoder = new BCryptPasswordEncoder();
     }
     public User createUser(User user) {
-        String salt = RandomStringUtils.secure().nextAlphabetic(16);
         String hashedPassword = encoder.encode(user.getPassword());
         user.addRole("USER");
 
         UserEntity userEntity = userMapper.toEntity(user);
         userEntity.setId(UUID.randomUUID().toString());
-        userEntity.setSalt(salt);
         userEntity.setPassword(hashedPassword);
         userEntity.setCreatedTimestamp(LocalDateTime.now());
 
